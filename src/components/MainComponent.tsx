@@ -9,6 +9,7 @@ import { DISHES } from '../data/dishes';
 import { COMMENTS } from '../data/comments';
 import { PROMOTIONS } from '../data/promotions';
 import { LEADERS } from '../data/leaders';
+import DishDetail from './DishdetailComponent';
 
 class Main extends Component<any, any> {
   constructor(props: any) {
@@ -35,6 +36,22 @@ class Main extends Component<any, any> {
         />
       );
     };
+    const DishWithId = ({ match }: any) => {
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              (dish: any) => dish.id === parseInt(match.params.dishId, 10)
+            )[0]
+          }
+          comments={this.state.comments.filter(
+            (comment: any) =>
+              comment.dishId === parseInt(match.params.dishId, 10)
+          )}
+        />
+      );
+    };
+
     return (
       <div>
         <Header />
@@ -45,6 +62,7 @@ class Main extends Component<any, any> {
             path='/menu'
             component={() => <Menu dishes={this.state.dishes} />}
           />
+          <Route path='/menu/:dishId' component={DishWithId} />
           <Route exact path='/contact' component={Contact} />} />
           <Redirect to='/home' />
         </Switch>
