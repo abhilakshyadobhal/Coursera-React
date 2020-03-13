@@ -3,13 +3,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Menu from './MenuComponent';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
+import DishDetail from './DishdetailComponent';
+import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Footer from './FooterComponent';
 import { DISHES } from '../data/dishes';
 import { COMMENTS } from '../data/comments';
 import { PROMOTIONS } from '../data/promotions';
 import { LEADERS } from '../data/leaders';
-import DishDetail from './DishdetailComponent';
 
 class Main extends Component<any, any> {
   constructor(props: any) {
@@ -64,6 +65,11 @@ class Main extends Component<any, any> {
           />
           <Route path='/menu/:dishId' component={DishWithId} />
           <Route exact path='/contact' component={Contact} />} />
+          <Route
+            exact
+            path='/aboutus'
+            component={() => <About leaders={this.state.leaders} />}
+          />
           <Redirect to='/home' />
         </Switch>
         <Footer />
