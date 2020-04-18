@@ -133,8 +133,8 @@ export class CommentForm extends Component<any, any> {
               <div className='col-12 col-md-9'>
                 <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                   <Row className='form-group'>
-                    <Label htmlFor='rating'>Rating</Label>
-                    <Col md={10}>
+                    <Label htmlFor='rating' md={12}>Rating</Label>
+                    <Col md={12}>
                       <Control.select
                         model='.rating'
                         name='rating'
@@ -150,10 +150,10 @@ export class CommentForm extends Component<any, any> {
                   </Row>
 
                   <Row className='form-group'>
-                    <Label htmlFor='author' md={2}>
+                    <Label htmlFor='author' md={12}>
                       Your name
                     </Label>
-                    <Col md={10}>
+                    <Col md={12}>
                       <Control.text
                         model='.author'
                         id='author'
@@ -180,10 +180,10 @@ export class CommentForm extends Component<any, any> {
                   </Row>
 
                   <Row className='form-group'>
-                    <Label htmlFor='feedback' md={2}>
+                    <Label htmlFor='feedback' md={12}>
                       Your feedback
                     </Label>
-                    <Col md={10}>
+                    <Col md={12}>
                       <Control.textarea
                         model='.message'
                         id='message'
