@@ -5,7 +5,7 @@ import {
   Button,
   Label,
   Col,
-  Row
+  Row,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -95,7 +95,7 @@ class Contact extends Component {
             <h3>Send us you feedback</h3>
           </div>
           <div className='col-12 col-md-9'>
-            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <Row className='form-group'>
                 <Label htmlFor='firstname' md={2}>
                   First name
@@ -110,7 +110,7 @@ class Contact extends Component {
                     validators={{
                       required,
                       minLength: minLength(3),
-                      maxLength: maxLength(15)
+                      maxLength: maxLength(15),
                     }}
                   />
                   <Errors
@@ -120,7 +120,7 @@ class Contact extends Component {
                     messages={{
                       required: 'Required',
                       minLength: 'Must be greater than 2 characters',
-                      maxLength: 'Must be 15 charaters or less'
+                      maxLength: 'Must be 15 charaters or less',
                     }}
                   />
                 </Col>
@@ -140,7 +140,7 @@ class Contact extends Component {
                     validators={{
                       required,
                       minLength: minLength(3),
-                      maxLength: maxLength(15)
+                      maxLength: maxLength(15),
                     }}
                   />
                   <Errors
@@ -150,7 +150,7 @@ class Contact extends Component {
                     messages={{
                       required: 'Required',
                       minLength: 'Must be greater than 2 characters',
-                      maxLength: 'Must be 15 charaters or less'
+                      maxLength: 'Must be 15 charaters or less',
                     }}
                   />
                 </Col>
@@ -171,7 +171,7 @@ class Contact extends Component {
                       required,
                       minLength: minLength(3),
                       maxLength: maxLength(15),
-                      isNumber
+                      isNumber,
                     }}
                   />
                   <Errors
@@ -182,7 +182,7 @@ class Contact extends Component {
                       required: 'Required',
                       minLength: 'Must be greater than 2 characters',
                       maxLength: 'Must be 15 charaters or less',
-                      isNumber: 'Must be a number'
+                      isNumber: 'Must be a number',
                     }}
                   />
                 </Col>
@@ -207,7 +207,7 @@ class Contact extends Component {
                     show='touched'
                     messages={{
                       required: 'Required',
-                      validEmail: 'Invalid email address'
+                      validEmail: 'Invalid email address',
                     }}
                   />
                 </Col>
@@ -230,7 +230,7 @@ class Contact extends Component {
                   <Control.select
                     model='.contactType'
                     name='contactType'
-                    className=''
+                    className='form-control'
                   >
                     <option>Tel.</option>
                     <option>Email</option>
