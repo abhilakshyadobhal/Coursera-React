@@ -12,6 +12,8 @@ import { COMMENTS } from "../data/comments";
 import { PROMOTIONS } from "../data/promotions";
 import { LEADERS } from "../data/leaders";
 import { connect } from "react-redux";
+import { addComment } from "../redux/ActionCreators";
+import { Dispatch } from "redux";
 
 class Main extends Component<any, any> {
   constructor(props: any) {
@@ -40,6 +42,7 @@ class Main extends Component<any, any> {
         <DishDetail
           dish={this.props.dishes.filter((dish: any) => dish.id === parseInt(match.params.dishId, 10))[0]}
           comments={this.props.comments.filter((comment: any) => comment.dishId === parseInt(match.params.dishId, 10))}
+          addComment={this.props.addComment}
         />
       );
     };
@@ -72,4 +75,9 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Main));
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  addComment: (dishId: any, rating: any, author: any, comment: any) =>
+    dispatch(addComment(dishId, rating, author, comment)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
