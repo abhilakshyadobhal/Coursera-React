@@ -1,5 +1,4 @@
 import * as ActionTypes from "./ActionTypes";
-import { DISHES } from "../data/dishes";
 
 export const Dishes = (state = { isLoading: true, errMess: null, dishes: [] }, action: any) => {
   switch (action.type) {
