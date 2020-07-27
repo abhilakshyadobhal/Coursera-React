@@ -14,6 +14,7 @@ import { LEADERS } from "../data/leaders";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { actions } from "react-redux-form";
 
 class Main extends Component<any, any> {
   constructor(props: any) {
@@ -65,7 +66,11 @@ class Main extends Component<any, any> {
             <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
             <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
             <Route path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contactus" component={Contact} />
+            <Route
+              exact
+              path="/contactus"
+              component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />}
+            />
             <Redirect to="/home" />
           </Switch>
         </div>
@@ -89,6 +94,9 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     dispatch(addComment(dishId, rating, author, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
+  },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset("feedback"));
   },
 });
 
