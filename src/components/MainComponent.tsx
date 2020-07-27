@@ -12,8 +12,8 @@ import { COMMENTS } from "../data/comments";
 import { PROMOTIONS } from "../data/promotions";
 import { LEADERS } from "../data/leaders";
 import { connect } from "react-redux";
-import { addComment } from "../redux/ActionCreators";
 import { Dispatch } from "redux";
+import { addComment, fetchDishes } from "../redux/ActionCreators";
 
 class Main extends Component<any, any> {
   constructor(props: any) {
@@ -26,11 +26,18 @@ class Main extends Component<any, any> {
       leaders: LEADERS,
     };
   }
+
+  componentDidMount() {
+    this.props.fetchDishes();
+  }
+
   render() {
     const HomePage = () => {
       return (
         <Home
-          dish={this.props.dishes.filter((dish: any) => dish.featured)[0]}
+          dish={this.props.dishes.dishes.filter((dish: any) => dish.featured)[0]}
+          dishesLoading={this.props.dishes.isLoading}
+          dishesErrMess={this.props.dishes.errMess}
           promotion={this.props.promotions.filter((promo: any) => promo.featured)[0]}
           leader={this.props.leaders.filter((leader: any) => leader.featured)[0]}
         />
@@ -40,7 +47,9 @@ class Main extends Component<any, any> {
     const DishWithId = ({ match }: any) => {
       return (
         <DishDetail
-          dish={this.props.dishes.filter((dish: any) => dish.id === parseInt(match.params.dishId, 10))[0]}
+          dish={this.props.dishes.dishes.filter((dish: any) => dish.id === parseInt(match.params.dishId, 10))[0]}
+          isLoading={this.props.dishes.isLoading}
+          errMess={this.props.dishes.errMess}
           comments={this.props.comments.filter((comment: any) => comment.dishId === parseInt(match.params.dishId, 10))}
           addComment={this.props.addComment}
         />
@@ -78,6 +87,9 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   addComment: (dishId: any, rating: any, author: any, comment: any) =>
     dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: () => {
+    dispatch(fetchDishes());
+  },
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
