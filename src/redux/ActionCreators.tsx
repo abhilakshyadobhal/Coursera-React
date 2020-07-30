@@ -1,33 +1,71 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../data/baseUrl";
 
-export const addComment = (dishId: any, rating: any, author: any, comment: any) => ({
+export const addComment = (comment: any) => ({
   type: ActionTypes.ADD_COMMENT,
-  payload: {
+  payload: comment,
+});
+
+export const postComment = (dishId: any, rating: any, author: any, comment: any) => (dispatch: any) => {
+  const newComment: any = {
     dishId: dishId,
     rating: rating,
     author: author,
     comment: comment,
-  },
-});
+  };
+
+  newComment.date = new Date().toISOString();
+
+  return fetch(baseUrl + "comments", {
+    method: "POST",
+    body: JSON.stringify(newComment),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error: any = new Error("Error " + response.status + ": " + response.statusText);
+          error.response = response;
+
+          throw error;
+        }
+      },
+      (error) => {
+        var errorMessage = new Error(error.errorMessage);
+        throw errorMessage;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(addComment(response)))
+    .catch((error) => {
+      console.log("Post comments: " + error.message);
+      alert("Comments could not be posted:\n" + error.message);
+    });
+};
 
 export const fetchDishes = () => (dispatch: any) => {
   dispatch(dishesLoading());
 
   return fetch(baseUrl + "dishes")
     .then(
-      (response: any) => {
+      (response) => {
         if (response.ok) {
           return response;
         } else {
           var error: any = new Error("Error " + response.status + ": " + response.statusText);
           error.response = response;
+
           throw error;
         }
       },
       (error) => {
-        var errmess = new Error(error.message);
-        throw errmess;
+        var errorMessage = new Error(error.errorMessage);
+        throw errorMessage;
       }
     )
     .then((response) => response.json())
@@ -58,14 +96,16 @@ export const fetchComments = () => (dispatch: any) => {
         } else {
           var error: any = new Error("Error " + response.status + ": " + response.statusText);
           error.response = response;
+
           throw error;
         }
       },
       (error) => {
-        var errmess = new Error(error.message);
-        throw errmess;
+        var errorMessage = new Error(error.errorMessage);
+        throw errorMessage;
       }
     )
+
     .then((response) => response.json())
     .then((comments) => dispatch(addComments(comments)))
     .catch((error) => dispatch(commentsFailed(error.message)));
@@ -92,14 +132,16 @@ export const fetchPromos = () => (dispatch: any) => {
         } else {
           var error: any = new Error("Error " + response.status + ": " + response.statusText);
           error.response = response;
+
           throw error;
         }
       },
       (error) => {
-        var errmess = new Error(error.message);
-        throw errmess;
+        var errorMessage = new Error(error.errorMessage);
+        throw errorMessage;
       }
     )
+
     .then((response) => response.json())
     .then((promos) => dispatch(addPromos(promos)))
     .catch((error) => dispatch(promosFailed(error.message)));
