@@ -13,7 +13,7 @@ import { PROMOTIONS } from "../data/promotions";
 import { LEADERS } from "../data/leaders";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { postComment, fetchDishes, fetchComments, fetchPromos } from "../redux/ActionCreators";
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -33,6 +33,7 @@ class Main extends Component<any, any> {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -45,7 +46,9 @@ class Main extends Component<any, any> {
           promotion={this.props.promotions.promotions.filter((promo: any) => promo.featured)[0]}
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter((leader: any) => leader.featured)[0]}
+          leader={this.props.leaders.leaders.filter((leader: any) => leader.featured)[0]}
+          leadersLoading={this.props.leaders.isLoading}
+          leadersErrMess={this.props.leaders.errMess}
         />
       );
     };
@@ -116,6 +119,9 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   },
   postComment: (dishId: any, rating: any, author: any, comment: any) =>
     dispatch(postComment(dishId, rating, author, comment)),
+  fetchLeaders: () => {
+    dispatch(fetchLeaders());
+  },
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
